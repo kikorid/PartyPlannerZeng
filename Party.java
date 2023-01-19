@@ -151,6 +151,7 @@ Add getter functionality to 'find' a person and report what table they are at
           if (p != null) {
             //if the name are the same, it will prints 
             if(p.getName().equals(ansName)){
+              System.out.println(ansName);
               System.out.print("The table number: " + (i+1) +"\n" + "The seat number: " + (j+1));
               personYes= true;
               break;
