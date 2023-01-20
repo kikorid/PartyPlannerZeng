@@ -14,7 +14,7 @@ class Main {
   //it will help generating questions
   public static void main(String[] args){
       Party p = new Party();
-      p.loadAndRunProgram();
+      p.loadAndRunProgram(10);
 
   }
 

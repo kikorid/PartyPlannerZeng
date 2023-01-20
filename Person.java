@@ -33,18 +33,20 @@ Then it checks at each table if the people does not repeat-> add a person object
 
 */
 
-  public static Person[][] groupIntoTables(ArrayList<Person> people) {
+  public static Person[][] groupIntoTables(ArrayList<Person> people,int tableSize) {
     //create an Person array table 10x 10
-        Person[][] tables = new Person[10][10];
+    int size = tableSize;
+        Person[][] tables = new Person[size][size];
     //tableIndex represents the colu
         int tableIndex = 0;// the row
         for (Person p : people) { //for each loops in the arraylist
           //for 
             boolean added = false; //adding more people at a table
           //less than ten tables
-            for (int i = 0; i < 10; i++) {
-                if (tableIndex == 10) {
-                    tableIndex = 0; //clear after one row
+            for (int i = 0; i < size; i++) {
+                if (tableIndex == size) {
+         // https://replit.com/@kikoriddleZ/Party#Party.java          tableIndex = 0; //clear after one row
+                  tableIndex=0;
                 }
               //the table num
                 Person[] table = tables[tableIndex];
@@ -60,7 +62,7 @@ Then it checks at each table if the people does not repeat-> add a person object
                 if (!sameCompany) { //if they are not in the same company 
                   //issue1: since the tableIndex increase each time
                   
-                    for (int j = 0; j < 10; j++) {
+                    for (int j = 0; j < size; j++) {
                         if (table[j] == null) {
                             table[j] = p; //add a person object
                           //if its not the same company you add
@@ -113,6 +115,28 @@ it will run in another file
             }
             System.out.println();
     }
+
+/*
+Instead of doing other ways, I have decided to use a method to run this rn. It will print company by roster at the table
+*/  
+
+  public static void printCompanyRoster(Person[][] tables, int num){
+      //loops to find the company number 
+      for(int i =0; i< tables.length;i++){
+        
+        for(int j=0; j< tables[i].length;j++){
+          Person p = tables[i][j];
+          if (p != null) {
+            //if the name are the same, it will prints 
+            if(p.comp ==num){
+              System.out.println(p.name);
+            }
+          }
+        }//end of the j forloop
+      }//end of i forloop
+    System.out.println();
+      
+  }
 
 
 

@@ -30,8 +30,9 @@ The file reading is based on W3school. This is the link: https://www.w3schools.c
 2. It also prompt uses for the following actions: Register Guest, print the tables, print a specfic table, print company, search attendee
 
 */
-  public void loadAndRunProgram() {
-     ArrayList<Person> peopleList = new ArrayList<Person>();
+  public void loadAndRunProgram(int size) {
+    int tableSize = size;
+     ArrayList<Person> peopleList = new ArrayList<Person>(); 
 
     //based on w3school, check the multiline comment for extra information
      try {
@@ -95,22 +96,52 @@ Add getter functionality to 'find' a person and report what table they are at
      // System.out.print(lastName + firstName + CompanyNum);
 
       //it will add a person object into the arraylist
-      peopleList.add(new Person(lastName,firstName,CompanyNum));
-      System.out.println("Guest Added!");
+      boolean added = false;
+      boolean peopleCap = false;
+      boolean tableCap = false;
+      int counter = 0;
+
+      //for loop to find how many people are in one company
+      for(int i =0; i< peopleList.size(); i++){
+        if (peopleList.get(i).getComp() == CompanyNum){
+          counter++;
+        }
+        
+      }
+
+      //making sure everyworks
+      if(peopleList.size() > 99){
+        peopleCap= true;
+      }else if (counter > 9){
+        tableCap = true;
+      }else{
+        added= true;
+        
+      }
+      
+      if(added == true){
+         peopleList.add(new Person(lastName,firstName,CompanyNum));
+         System.out.println("Guest Added!");
+      }else if (peopleCap == true){
+        System.out.println("You can't add more people in the list, becauser there are 100 people already!");
+      }else if (tableCap == true){
+        System.out.println("You can't add more people to this company anymory! There are too much of them");
+      }
+     
 
     }else if(ans ==2){
       //it prints the whole table
-      Person[][] tables = Person.groupIntoTables(peopleList);
+      Person[][] tables = Person.groupIntoTables(peopleList,tableSize);
       System.out.print("\n");
       //it calls the Person file and find the printTable methods, which allows it to print the table
       Person.printTables(tables);
     }else if(ans == 3){
       //it prints the table based on a number
-      Person[][] tables = Person.groupIntoTables(peopleList);
+      Person[][] tables = Person.groupIntoTables(peopleList,tableSize);
       System.out.print("\n" + "Yeah! Enter the table number you want to print: ");
       int tableNum = scan.nextInt();
       //a little error check, but i gave up in the end
-      if(tableNum <10 && tableNum >0){
+      if(tableNum <11 && tableNum >0){
         System.out.print("\n");
         //it calls the Person file and the printSpecificTables for the table input 
         Person.printSpecificTables(tables,tableNum);
@@ -126,25 +157,23 @@ Add getter functionality to 'find' a person and report what table they are at
 
       //provide the list of markets
       System.out.println("1,Wal-Mart" + "  " + "2,Kroger" + "  " + "3,Amazon" + "  " + "4,Lowes"+ "  "+ "5,Best Western" + "  " + "6,KMart" + "  " + "7,Fusian" + "  "+ "8,Heinz" + "  "+ "9,Gucci" +  "  " + "10,Prada" + "  " + "11,Nike" + "  "+ "12,Dodge"+ "  "+ "13,Maserati" + "  " + "14,Razor" + "  " + "15,AMD" + "  "+ "16,Razer"+ "\n");
+      Person[][] tables = Person.groupIntoTables(peopleList,tableSize);
       
       System.out.print("\n" +"Enter the company number you want to print: ");
       int compNum = scan.nextInt();
       //it will run the arrayList and match the right company number
-      for(int i =0; i < peopleList.size(); i++){
-           if (peopleList.get(i).getComp()==compNum){
-               System.out.println(peopleList.get(i).getName());
-           }
-      }
+      Person.printCompanyRoster(tables,compNum);
       
       
     }else if(ans ==5){
       //Add getter functionality to 'find' a person and report what table they are at
       boolean personYes = false;
-      Person[][] tables = Person.groupIntoTables(peopleList);
+      Person[][] tables = Person.groupIntoTables(peopleList,tableSize);
       System.out.print("\n" + "Hello! Enter the name you would like to search (FirstName LastName): ");
       String temp = scan.nextLine();
       String ansName = scan.nextLine();
       //loops to find the name 
+      System.out.println("");
       for(int i =0; i< tables.length;i++){
         for(int j=0; j< tables[i].length;j++){
           Person p = tables[i][j];
